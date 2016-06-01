@@ -1,4 +1,6 @@
-%include "prompt.asm"
+%include "common.asm"
+
+extern prompt
 
 section .bss
 

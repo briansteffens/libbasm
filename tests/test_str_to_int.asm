@@ -1,4 +1,6 @@
-%include "str_to_int.asm"
+%include "common.asm"
+
+extern str_to_int
 
 section .data
 
