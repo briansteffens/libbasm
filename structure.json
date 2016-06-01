@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "name": "int_to_str",
+      "functions": ["int_to_str"]
+    },
+    {
+      "name": "mem",
+      "functions": ["allocate", "reallocate", "deallocate"]
+    },
+    {
+      "name": "prompt",
+      "functions": ["prompt"]
+    },
+    {
+      "name": "str_cmp",
+      "functions": ["str_cmp"]
+    },
+    {
+      "name": "str_cpy",
+      "functions": ["str_cpy"]
+    },
+    {
+      "name": "str_debug",
+      "functions": ["str_debug"],
+      "dependencies": ["int_to_str"]
+    },
+    {
+      "name": "str_len",
+      "functions": ["str_len"]
+    },
+    {
+      "name": "str_rev",
+      "functions": ["str_rev"]
+    },
+    {
+      "name": "str_str",
+      "functions": ["str_str"]
+    },
+    {
+      "name": "str_to_int",
+      "functions": ["str_to_int"]
+    }
+  ]
+}
