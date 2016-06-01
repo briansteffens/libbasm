@@ -1,6 +1,6 @@
 %include "common.asm"
 
-extern strstr
+extern str_str
 
 section .data
 
@@ -13,7 +13,7 @@ global _start
 _start:
     push haystack          ; String to search
     push needle            ; String to search for
-    call strstr
+    call str_str
     add rsp, 16
 
     mov rbx, rax

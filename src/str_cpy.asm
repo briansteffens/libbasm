@@ -2,8 +2,8 @@
 
 section .text
 
-global strcpy:function
-strcpy:
+global str_cpy:function
+str_cpy:
     push rbp
     mov rbp, rsp
 
@@ -16,7 +16,7 @@ strcpy:
 ; Put the output buffer in edx
     mov rdx, [rbp + 16]
 
-strcpy_loop_start:
+str_cpy_loop_start:
 ; Load the next byte from source into al
     mov al, [rbx + rcx]
 
@@ -28,7 +28,7 @@ strcpy_loop_start:
 
 ; Check for null char and end copy if so
     cmp al, 0
-    jne strcpy_loop_start
+    jne str_cpy_loop_start
 
 ; Copy bytes written to eax for return value
     mov rax, rcx

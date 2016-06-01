@@ -1,5 +1,7 @@
 %include "common.asm"
 
+default rel
+
 section .data
 
     left  db "Greetings!", 0
@@ -11,15 +13,15 @@ global _start
 _start:
     push left
     push right
-    call strcmp
+    call str_cmp
     add rsp, 16
     mov rbx, rax
 
     mov rax, SYS_EXIT
     int LINUX
 
-global strcmp
-strcmp:
+global str_cmp
+str_cmp:
     push rbp
     mov rbp, rsp
 
@@ -30,34 +32,34 @@ strcmp:
     mov rbx, [rbp + 16]
     mov rdx, [rbp + 24]
 
-strcmp_loop_start:
+str_cmp_loop_start:
 ; Load the byte to be compared from both strings into al and ah
     mov al, [rbx + rcx]
     mov ah, [rdx + rcx]
 
 ; Compare the chars, any chars unmatching = no match
     cmp al, ah
-    jne strcmp_no_match
+    jne str_cmp_no_match
 
 ; If they match but one is a null, string ends, it's a match
     cmp al, 0
-    je strcmp_match
+    je str_cmp_match
 
     cmp ah, 0
-    je strcmp_match
+    je str_cmp_match
 
 ; Match but neither is a null, increment char index and loop again
     inc rcx
-    jmp strcmp_loop_start
+    jmp str_cmp_loop_start
 
-strcmp_no_match:
+str_cmp_no_match:
     mov rax, 0
-    jmp strcmp_ret
+    jmp str_cmp_ret
 
-strcmp_match:
+str_cmp_match:
     mov rax, 1
 
-strcmp_ret:
+str_cmp_ret:
     mov rsp, rbp
     pop rbp
     ret

@@ -1,20 +1,21 @@
 %include "common.asm"
 
-extern strlen
+extern str_debug
 
 section .data
 
-    input db "Greetings!\0"
+    input db "Greetings!", 0
+    input_len equ $-input
 
 section .text
 
 global _start
 _start:
     push input
-    call strlen
-    add rsp, 8
+    push input_len
+    call str_debug
+    add rsp, 16
     mov rbx, 0
-    mov bl, al
 
     mov rax, SYS_EXIT
     int LINUX

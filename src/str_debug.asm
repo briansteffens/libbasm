@@ -19,7 +19,7 @@ section .data
 
 section .text
 
-;   Function strdebug
+;   Function str_debug
 ;       Prints out a string's chars in ASCII format for debugging purposes.
 ;
 ;   Stack arguments:
@@ -30,18 +30,18 @@ section .text
 ;   Return values:
 ;       rax       - 0 if success, otherwise failure
 
-global strdebug:function
-strdebug:
+global str_debug:function
+str_debug:
     push rbp
     mov rbp, rsp
     sub rsp, LOCAL_BYTES
 
     mov rcx, 0
 
-strdebug_loop_start:
+str_debug_loop_start:
     mov rdx, [rbp + PARAM_INPUT_LEN]
     cmp rcx, rdx
-    jge strdebug_done
+    jge str_debug_done
     mov [rbp + LOCAL_INDEX], rcx
 
     mov rbx, [rbp + PARAM_INPUT]
@@ -54,7 +54,7 @@ strdebug_loop_start:
     call int_to_str
     add rsp, 16
     cmp rax, 0
-    jne strdebug_err
+    jne str_debug_err
 
     mov rdx, rbx
     mov rcx, BUFFER
@@ -65,21 +65,21 @@ strdebug_loop_start:
     mov rbx, STDOUT
     int LINUX
     cmp rax, 0
-    jl strdebug_err
+    jl str_debug_err
 
     mov rcx, [rbp + LOCAL_INDEX]
     inc rcx
 
-    jmp strdebug_loop_start
+    jmp str_debug_loop_start
 
-strdebug_err:
+str_debug_err:
     mov rax, -1
-    jmp strdebug_ret
+    jmp str_debug_ret
 
-strdebug_done:
+str_debug_done:
     mov rax, 0
 
-strdebug_ret:
+str_debug_ret:
     mov rsp, rbp
     pop rbp
     ret

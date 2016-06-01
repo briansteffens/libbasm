@@ -1,5 +1,7 @@
 %include "common.asm"
 
+default rel
+
 section .bss
 
     heap_begin resq 1

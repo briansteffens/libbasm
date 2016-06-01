@@ -11,7 +11,7 @@ global _start
 _start:
     push string                     ; String to reverse
     push 9                          ; Number of chars to include
-    call strrev
+    call str_rev
     add rsp, 16
 
     mov rax, SYS_FILE_WRITE
@@ -24,8 +24,8 @@ _start:
     mov rax, SYS_EXIT
     int LINUX
 
-global strrev
-strrev:
+global str_rev
+str_rev:
     push rbp
     mov rbp, rsp
 
@@ -43,7 +43,7 @@ strrev:
 
     mov rbx, [rbp + 24]             ; Buffer -> ebx
 
-strrev_loop_start:
+str_rev_loop_start:
     mov al, [rbx + rcx]             ; Grab char from left
     mov ah, [rbx + rdx]             ; Grab char from right
 
@@ -51,14 +51,14 @@ strrev_loop_start:
     mov [rbx + rdx], al             ; Swap left -> right
 
     cmp [rbp - 8], rcx              ; Compare left counter to max swaps
-    je strrev_loop_end
+    je str_rev_loop_end
 
     inc rcx                         ; Increment left counter
     dec rdx                         ; Decrement right counter
 
-    jmp strrev_loop_start
+    jmp str_rev_loop_start
 
-strrev_loop_end:
+str_rev_loop_end:
     mov rsp, rbp
     pop rbp
     ret

@@ -1,6 +1,6 @@
 %include "common.asm"
 
-extern strcpy
+extern str_cpy
 
 section .bss
 
@@ -16,7 +16,7 @@ global _start
 _start:
     push source
     push target
-    call strcpy
+    call str_cpy
     add rsp, 16
 
     mov rdx, rax

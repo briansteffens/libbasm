@@ -2,19 +2,19 @@
 
 section .text
 
-global strlen:function
-strlen:
+global str_len:function
+str_len:
     push rbp
     mov rbp, rsp
 
     mov rcx, -1
     mov rbx, [rbp + 16]
 
-strlen_loop_start:
+str_len_loop_start:
     inc rcx
     mov al, [rbx + rcx]
     cmp al, 0
-    jne strlen_loop_start
+    jne str_len_loop_start
 
     mov rax, rcx
 
