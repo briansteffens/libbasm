@@ -2,20 +2,19 @@
 
 extern int_to_str
 
+%define BUFFER_LEN 11
+
+%define PARAM_INPUT 24
+%define PARAM_INPUT_LEN 16
+
+%define LOCAL_BYTES 8
+%define LOCAL_INDEX -8
+
+%define ASCII_LF 10
+
 section .bss
 
-    BUFFER_LEN equ 11
     BUFFER resb BUFFER_LEN
-
-section .data
-
-    PARAM_INPUT equ 24
-    PARAM_INPUT_LEN equ 16
-
-    LOCAL_BYTES equ 8
-    LOCAL_INDEX equ -8
-
-    ASCII_LF equ 10
 
 section .text
 

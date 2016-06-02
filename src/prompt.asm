@@ -1,11 +1,9 @@
 %include "common.asm"
 
-section .data
-
-    PARAM_PROMPT equ 40
-    PARAM_PROMPT_LEN equ 32
-    PARAM_BUFFER equ 24
-    PARAM_BUFFER_LEN equ 16
+%define PARAM_PROMPT 40
+%define PARAM_PROMPT_LEN 32
+%define PARAM_BUFFER 24
+%define PARAM_BUFFER_LEN 16
 
 section .text
 

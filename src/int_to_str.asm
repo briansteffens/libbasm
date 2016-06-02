@@ -1,11 +1,8 @@
 %include "common.asm"
 
-section .data
-
-    PARAM_INPUT equ 24
-    PARAM_OUTPUT equ 16
-
-    ASCII_DIGIT_0 equ 48
+%define PARAM_INPUT 24
+%define PARAM_OUTPUT 16
+%define ASCII_DIGIT_0 48
 
 section .text
 

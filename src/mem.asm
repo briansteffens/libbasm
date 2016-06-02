@@ -1,20 +1,18 @@
 %include "common.asm"
 
+%define HEADER_SIZE 16
+%define HDR_AVAIL_OFFSET 0
+%define HDR_SIZE_OFFSET 8
+
+%define UNAVAILABLE 0
+%define AVAILABLE 1
+
 default rel
 
 section .bss
 
     heap_begin resq 1
     current_break resq 1
-
-section .data
-
-    HEADER_SIZE equ 16
-    HDR_AVAIL_OFFSET equ 0
-    HDR_SIZE_OFFSET equ 8
-
-    UNAVAILABLE equ 0
-    AVAILABLE equ 1
 
 section .text
 
@@ -54,7 +52,7 @@ allocate_init:
 ;                   segment.
 
 global allocate:function
-    ST_MEM_SIZE equ 16         ; Stack position of memory size to allocate
+    %define ST_MEM_SIZE 16         ; Stack position of memory size to allocate
 allocate:
     push rbp
     mov rbp, rsp
@@ -177,8 +175,8 @@ allocate_ret:
 ;       rax          - 0 if failed, otherwise the new address of the segment.
 
 global reallocate:function
-    SEGMENT_ADDR equ 24
-    NEW_SIZE equ 16
+    %define SEGMENT_ADDR 24
+    %define NEW_SIZE 16
 reallocate:
     push rbp
     mov rbp, rsp
@@ -249,7 +247,7 @@ reallocate_ret:
 ;       MEMORY_ADDR - The address of the segment to free.
 
 global deallocate:function
-    ST_MEMORY_ADDR equ 8
+    %define ST_MEMORY_ADDR 8
 deallocate:
 
 ; Grab input parameter (address of block to free)
