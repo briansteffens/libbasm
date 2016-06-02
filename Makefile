@@ -22,6 +22,8 @@ tests: build
 	ld -o bin/test_mem obj/test_mem.o obj/mem.o
 	nasm -f elf64 -isrc/ tests/test_prompt.asm -o obj/test_prompt.o
 	ld -o bin/test_prompt obj/test_prompt.o obj/prompt.o
+	nasm -f elf64 -isrc/ tests/test_str_cmp.asm -o obj/test_str_cmp.o
+	ld -o bin/test_str_cmp obj/test_str_cmp.o obj/str_cmp.o
 	nasm -f elf64 -isrc/ tests/test_str_cpy.asm -o obj/test_str_cpy.o
 	ld -o bin/test_str_cpy obj/test_str_cpy.o obj/str_cpy.o
 	nasm -f elf64 -isrc/ tests/test_str_debug.asm -o obj/test_str_debug.o
