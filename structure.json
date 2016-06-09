@@ -40,6 +40,11 @@
     {
       "name": "str_to_int",
       "functions": ["str_to_int"]
+    },
+    {
+      "name": "vector",
+      "functions": ["vector_new", "vector_free"],
+      "dependencies": ["allocate", "reallocate", "deallocate"]
     }
   ]
 }
