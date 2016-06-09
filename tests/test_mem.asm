@@ -4,9 +4,11 @@ extern allocate
 extern reallocate
 extern deallocate
 
+default rel
+
 section .bss
 
-    string resq 0
+    string resq 1
 
 section .text
 
@@ -23,7 +25,7 @@ _start:
     mov [string], rax
 
 ; Write some text to the string
-    mov rbx, string
+    mov rbx, [string]
     mov rcx, 0
     mov byte [rbx + rcx], 72
     inc rcx
@@ -36,14 +38,14 @@ _start:
 ; Write string to stdout
     mov rax, SYS_FILE_WRITE
     mov rbx, STDOUT
-    mov rcx, string
+    mov rcx, [string]
     mov rdx, 3
     int LINUX
     cmp rax, 0
     jl err
 
 ; Increase segment size
-    push string
+    push qword [string]
     push 7
     call reallocate
     add rsp, 16
@@ -52,7 +54,7 @@ _start:
     mov [string], rax
 
 ; Add more text to string
-    mov rbx, string
+    mov rbx, [string]
     mov rcx, 3
     mov byte [rbx + rcx], 58
     inc rcx
@@ -65,14 +67,14 @@ _start:
 ; Write string to stdout
     mov rax, SYS_FILE_WRITE
     mov rbx, STDOUT
-    mov rcx, string
+    mov rcx, [string]
     mov rdx, 6
     int LINUX
     cmp rax, 0
     jl err
 
 ; Free the string
-    push string
+    push qword [string]
     call deallocate
     add rsp, 8
 

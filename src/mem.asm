@@ -145,7 +145,7 @@ allocate_more:
     mov [rax + HDR_SIZE_OFFSET], rcx
 
 ; Move to start of actual memory
-    mov rax, HEADER_SIZE
+    add rax, HEADER_SIZE
 
 ; Save new break point
     mov [current_break], rbx
