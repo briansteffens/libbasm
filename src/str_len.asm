@@ -1,23 +1,28 @@
-%include "common.asm"
+; Function str_len
+;     Count the number of characters in a null-terminated string.
+;
+; Inputs:
+;     rdi: string to count
+;     rsi: max characters to check
+;
+; Outputs:
+;     rax: length of string
 
 section .text
 
 global str_len:function
 str_len:
-    push rbp
-    mov rbp, rsp
+    mov rax, 0
 
-    mov rcx, -1
-    mov rbx, [rbp + 16]
+    strlen_loop:
+        cmp byte [rdi + rax], 0
+        je strlen_end
 
-str_len_loop_start:
-    inc rcx
-    mov al, [rbx + rcx]
-    cmp al, 0
-    jne str_len_loop_start
+        cmp rax, rsi
+        jge strlen_end
 
-    mov rax, rcx
+        inc rax
+    jmp strlen_loop
 
-    mov rsp, rbp
-    pop rbp
-    ret
+    strlen_end:
+        ret

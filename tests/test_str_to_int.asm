@@ -1,31 +1,29 @@
-%include "common.asm"
+%define sys_exit 60
 
 extern str_to_int
 
 section .data
 
-    INPUT db "123"
-    INPUT_LEN equ $-INPUT
+    input: db "123"
+    input_len: equ $-input
 
 section .text
 
 global _start
 _start:
-    mov rbp, rsp
-
-    push INPUT
-    push INPUT_LEN
+    mov rdi, input
+    mov rsi, input_len
     call str_to_int
-    add rsp, 16
 
     cmp rax, 0
     jne err
 
+    mov rdi, rcx
     jmp exit
 
 err:
-    mov rbx, rax
+    mov rdi, rax
 
 exit:
-    mov rax, SYS_EXIT
-    int LINUX
+    mov rax, sys_exit
+    syscall
