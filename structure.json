@@ -1,6 +1,10 @@
 {
   "files": [
     {
+      "name": "byte_to_hex",
+      "functions": ["byte_to_hex"]
+    },
+    {
       "name": "int_to_str",
       "functions": ["int_to_str"]
     },
