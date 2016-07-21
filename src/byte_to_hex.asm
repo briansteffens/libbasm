@@ -30,13 +30,13 @@ byte_to_hex:
 
 convert_digit:
 
-    cmp rax, 10
-    jg convert_digit_over_10
+    cmp rax, 9
+    jg convert_digit_over_9
 
         add rax, '0'
         ret
 
-    convert_digit_over_10:
+    convert_digit_over_9:
 
         add rax, 'a' - 10
         ret
