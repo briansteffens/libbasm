@@ -2,6 +2,7 @@ all: build
 
 build:
 	mkdir -p obj bin
+	nasm -f elf64 -isrc/ src/byte_to_hex.asm -o obj/byte_to_hex.o
 	nasm -f elf64 -isrc/ src/int_to_str.asm -o obj/int_to_str.o
 	nasm -f elf64 -isrc/ src/mem.asm -o obj/mem.o
 	nasm -f elf64 -isrc/ src/prompt.asm -o obj/prompt.o
@@ -18,6 +19,8 @@ build:
 		obj/str_len.o obj/str_str.o obj/str_to_int.o
 
 tests: build
+	nasm -f elf64 -isrc/ tests/test_byte_to_hex.asm -o obj/test_byte_to_hex.o
+	ld -o bin/test_byte_to_hex obj/test_byte_to_hex.o obj/byte_to_hex.o
 	nasm -f elf64 -isrc/ tests/test_int_to_str.asm -o obj/test_int_to_str.o
 	ld -o bin/test_int_to_str obj/test_int_to_str.o obj/int_to_str.o
 	nasm -f elf64 -isrc/ tests/test_mem.asm -o obj/test_mem.o
