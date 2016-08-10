@@ -5,6 +5,10 @@
       "functions": ["byte_to_hex"]
     },
     {
+      "name": "hex_to_byte",
+      "functions": ["hex_to_byte"]
+    },
+    {
       "name": "int_to_str",
       "functions": ["int_to_str"]
     },
