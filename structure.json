@@ -9,6 +9,10 @@
       "functions": ["hex_to_byte"]
     },
     {
+      "name": "hex_to_int",
+      "functions": ["hex_to_int"]
+    },
+    {
       "name": "int_to_str",
       "functions": ["int_to_str"]
     },

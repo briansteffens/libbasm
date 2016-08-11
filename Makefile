@@ -4,6 +4,7 @@ build:
 	mkdir -p obj bin
 	nasm -f elf64 -isrc/ src/byte_to_hex.asm -o obj/byte_to_hex.o
 	nasm -f elf64 -isrc/ src/hex_to_byte.asm -o obj/hex_to_byte.o
+	nasm -f elf64 -isrc/ src/hex_to_int.asm -o obj/hex_to_int.o
 	nasm -f elf64 -isrc/ src/int_to_str.asm -o obj/int_to_str.o
 	nasm -f elf64 -isrc/ src/mem.asm -o obj/mem.o
 	nasm -f elf64 -isrc/ src/prompt.asm -o obj/prompt.o
@@ -24,6 +25,8 @@ tests: build
 	ld -o bin/test_byte_to_hex obj/test_byte_to_hex.o obj/byte_to_hex.o
 	nasm -f elf64 -isrc/ tests/test_hex_to_byte.asm -o obj/test_hex_to_byte.o
 	ld -o bin/test_hex_to_byte obj/test_hex_to_byte.o obj/hex_to_byte.o
+	nasm -f elf64 -isrc/ tests/test_hex_to_int.asm -o obj/test_hex_to_int.o
+	ld -o bin/test_hex_to_int obj/test_hex_to_int.o obj/hex_to_int.o
 	nasm -f elf64 -isrc/ tests/test_int_to_str.asm -o obj/test_int_to_str.o
 	ld -o bin/test_int_to_str obj/test_int_to_str.o obj/int_to_str.o
 	nasm -f elf64 -isrc/ tests/test_mem.asm -o obj/test_mem.o
