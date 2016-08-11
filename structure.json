@@ -10,11 +10,16 @@
     },
     {
       "name": "hex_to_int",
-      "functions": ["hex_to_int"]
+      "functions": ["hex_to_int"],
+      "dependencies": ["byte_to_hex"]
     },
     {
       "name": "int_to_str",
       "functions": ["int_to_str"]
+    },
+    {
+      "name": "int_to_hex",
+      "functions": ["int_to_hex"]
     },
     {
       "name": "mem",

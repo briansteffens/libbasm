@@ -9,8 +9,9 @@ section .text
 global _start
 _start:
 
-    mov rdi, 10
+    mov rdi, 77
     mov rsi, buffer
+    mov rdx, 1
     call byte_to_hex
 
     mov rax, 1
