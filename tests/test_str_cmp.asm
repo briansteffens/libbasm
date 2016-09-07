@@ -10,11 +10,10 @@ section .data
 section .text
 global _start
 _start:
-    push left
-    push right
+    mov rdi, left
+    mov rsi, right
     call str_cmp
-    add rsp, 16
-    mov rbx, rax
+    mov rdi, rax
 
-    mov rax, SYS_EXIT
-    int LINUX
+    mov rax, 60
+    syscall

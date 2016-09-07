@@ -4,46 +4,43 @@ default rel
 
 section .text
 
+; Function str_cmp
+;     Compare two strings for equality.
+;
+; Inputs:
+;     rdi: The first string to compare
+;     rsi: The second string to compare
+;
+; Outputs:
+;     rax: 1 if the strings match, 0 otherwise
+
 global str_cmp
 str_cmp:
-    push rbp
-    mov rbp, rsp
 
 ; Set char index
     mov rcx, 0
 
-; Put the input strings in rbx and rdx
-    mov rbx, [rbp + 16]
-    mov rdx, [rbp + 24]
+loop_start:
 
-str_cmp_loop_start:
-; Load the byte to be compared from both strings into al and ah
-    mov al, [rbx + rcx]
-    mov ah, [rdx + rcx]
+; Load left character into a register
+    mov al, [rdi + rcx]
 
 ; Compare the chars, any chars unmatching = no match
-    cmp al, ah
-    jne str_cmp_no_match
+    cmp [rsi + rcx], al
+    jne no_match
 
-; If they match but one is a null, string ends, it's a match
+; If the chars match but it's a null (string ends) it's a match
     cmp al, 0
-    je str_cmp_match
+    je match
 
-    cmp ah, 0
-    je str_cmp_match
-
-; Match but neither is a null, increment char index and loop again
+; Chars match but not null: increment char index and loop again
     inc rcx
-    jmp str_cmp_loop_start
+    jmp loop_start
 
-str_cmp_no_match:
+no_match:
     mov rax, 0
-    jmp str_cmp_ret
+    ret
 
-str_cmp_match:
+match:
     mov rax, 1
-
-str_cmp_ret:
-    mov rsp, rbp
-    pop rbp
     ret
