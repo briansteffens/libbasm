@@ -1,0 +1,66 @@
+extern str_cmp
+
+section .data
+
+    left  db "{{ left }}", 0
+    right db "{{ right }}", 0
+
+section .text
+global _start
+_start:
+    mov rdi, left
+    mov rsi, right
+    call str_cmp
+    mov rdi, rax
+
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "Match, same length",
+            "left": "Greetings!",
+            "right": "Greetings!",
+            "expect_status": 1
+        },
+        {
+            "name": "No match, same length",
+            "left": "Greetings!",
+            "right": "Greetings?",
+            "expect_status": 0
+        },
+        {
+            "name": "No match, left longer",
+            "left": "Greetings!",
+            "right": "Hi!",
+            "expect_status": 0
+        },
+        {
+            "name": "No match, right longer",
+            "left": "Hi!",
+            "right": "Greetings!",
+            "expect_status": 0
+        },
+        {
+            "name": "Match, empty",
+            "left": "",
+            "right": "",
+            "expect_status": 1
+        },
+        {
+            "name": "No match, left empty",
+            "left": "",
+            "right": "Hello",
+            "expect_status": 0
+        },
+        {
+            "name": "No match, right empty",
+            "left": "Hello",
+            "right": "",
+            "expect_status": 0
+        }
+    ]
+}

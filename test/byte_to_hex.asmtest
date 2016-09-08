@@ -1,0 +1,79 @@
+extern byte_to_hex
+
+section .bss
+
+    buffer: resb 2
+
+section .text
+
+global _start
+_start:
+
+; Call function
+    mov rdi, {{ input }}
+    mov rsi, buffer
+    mov rdx, 1
+    call byte_to_hex
+
+; Print result to console
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, buffer
+    mov rdx, 2
+    syscall
+
+    mov rax, 60
+    mov rdi, 0
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "0 => 00",
+            "input": "0",
+            "expect_stdout": "00"
+        },
+        {
+            "name": "7 => 07",
+            "input": "7",
+            "expect_stdout": "07"
+        },
+        {
+            "name": "10 => 0a",
+            "input": "10",
+            "expect_stdout": "0a"
+        },
+        {
+            "name": "15 => 0g",
+            "input": "15",
+            "expect_stdout": "0g"
+        },
+        {
+            "name": "16 => 10",
+            "input": "16",
+            "expect_stdout": "10"
+        },
+        {
+            "name": "17 => 11",
+            "input": "17",
+            "expect_stdout": "11"
+        },
+        {
+            "name": "77 => 4d",
+            "input": "77",
+            "expect_stdout": "4d"
+        },
+        {
+            "name": "255 => ff",
+            "input": "255",
+            "expect_stdout": "ff"
+        },
+        {
+            "name": "256 => 00",
+            "input": "256",
+            "expect_stdout": "00"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "init": [
+        "./build.py"
+    ],
+    "before_each": [
+        "nasm -f elf64 .asmtest/test.asm -o .asmtest/test.o",
+        "ld .asmtest/test.o bin/libbasm.a -o .asmtest/test.a"
+    ]
+}

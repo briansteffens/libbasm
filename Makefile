@@ -22,8 +22,6 @@ build:
 		obj/str_len.o obj/str_str.o obj/str_to_int.o
 
 tests: build
-	nasm -f elf64 -isrc/ tests/test_byte_to_hex.asm -o obj/test_byte_to_hex.o
-	ld -o bin/test_byte_to_hex obj/test_byte_to_hex.o obj/byte_to_hex.o
 	nasm -f elf64 -isrc/ tests/test_hex_to_byte.asm -o obj/test_hex_to_byte.o
 	ld -o bin/test_hex_to_byte obj/test_hex_to_byte.o obj/hex_to_byte.o
 	nasm -f elf64 -isrc/ tests/test_hex_to_int.asm -o obj/test_hex_to_int.o
@@ -39,8 +37,6 @@ tests: build
 	ld -o bin/test_prompt obj/test_prompt.o obj/prompt.o
 	nasm -f elf64 -isrc/ tests/test_str_cat.asm -o obj/test_str_cat.o
 	ld -o bin/test_str_cat obj/test_str_cat.o obj/str_cat.o
-	nasm -f elf64 -isrc/ tests/test_str_cmp.asm -o obj/test_str_cmp.o
-	ld -o bin/test_str_cmp obj/test_str_cmp.o obj/str_cmp.o
 	nasm -f elf64 -isrc/ tests/test_str_cpy.asm -o obj/test_str_cpy.o
 	ld -o bin/test_str_cpy obj/test_str_cpy.o obj/str_cpy.o
 	nasm -f elf64 -isrc/ tests/test_str_debug.asm -o obj/test_str_debug.o
