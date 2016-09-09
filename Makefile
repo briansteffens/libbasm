@@ -17,15 +17,10 @@ build:
 	nasm -f elf64 -isrc/ src/str_rev.asm -o obj/str_rev.o
 	nasm -f elf64 -isrc/ src/str_str.asm -o obj/str_str.o
 	nasm -f elf64 -isrc/ src/str_to_int.asm -o obj/str_to_int.o
-	nasm -f elf64 -isrc/ src/vector.asm -o obj/vector.o
 	ld -shared -o bin/libbasm.so obj/int_to_str.o obj/prompt.o obj/str_cpy.o \
 		obj/str_len.o obj/str_str.o obj/str_to_int.o
 
 tests: build
-	nasm -f elf64 -isrc/ tests/test_hex_to_byte.asm -o obj/test_hex_to_byte.o
-	ld -o bin/test_hex_to_byte obj/test_hex_to_byte.o obj/hex_to_byte.o
-	nasm -f elf64 -isrc/ tests/test_hex_to_int.asm -o obj/test_hex_to_int.o
-	ld -o bin/test_hex_to_int obj/test_hex_to_int.o obj/hex_to_int.o
 	nasm -f elf64 -isrc/ tests/test_int_to_str.asm -o obj/test_int_to_str.o
 	ld -o bin/test_int_to_str obj/test_int_to_str.o obj/int_to_str.o
 	nasm -f elf64 -isrc/ tests/test_int_to_hex.asm -o obj/test_int_to_hex.o
@@ -50,8 +45,6 @@ tests: build
 	ld -o bin/test_str_str obj/test_str_str.o obj/str_str.o
 	nasm -f elf64 -isrc/ tests/test_str_to_int.asm -o obj/test_str_to_int.o
 	ld -o bin/test_str_to_int obj/test_str_to_int.o obj/str_to_int.o
-	nasm -f elf64 -isrc/ tests/test_vector.asm -o obj/test_vector.o
-	ld -o bin/test_vector obj/test_vector.o obj/vector.o obj/mem.o
 
 clean:
 	rm -rf obj bin

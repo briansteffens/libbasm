@@ -12,18 +12,21 @@ _start:
 ; Call function
     mov rdi, {{ input }}
     mov rsi, buffer
-    mov rdx, 1
+    mov rdx, {{ pad }}
     call byte_to_hex
+
+; Save characters written
+    mov rbx, rax
 
 ; Print result to console
     mov rax, 1
     mov rdi, 1
     mov rsi, buffer
-    mov rdx, 2
+    mov rdx, rbx
     syscall
 
     mov rax, 60
-    mov rdi, 0
+    mov rdi, rbx
     syscall
 
 -----
@@ -33,47 +36,100 @@ _start:
         {
             "name": "0 => 00",
             "input": "0",
-            "expect_stdout": "00"
+            "pad": "1",
+            "expect_stdout": "00",
+            "expect_status": 2
         },
         {
             "name": "7 => 07",
             "input": "7",
-            "expect_stdout": "07"
+            "pad": "1",
+            "expect_stdout": "07",
+            "expect_status": 2
         },
         {
             "name": "10 => 0a",
             "input": "10",
-            "expect_stdout": "0a"
+            "pad": "1",
+            "expect_stdout": "0a",
+            "expect_status": 2
         },
         {
-            "name": "15 => 0g",
+            "name": "15 => 0f",
             "input": "15",
-            "expect_stdout": "0g"
+            "pad": "1",
+            "expect_stdout": "0f",
+            "expect_status": 2
         },
         {
             "name": "16 => 10",
             "input": "16",
-            "expect_stdout": "10"
+            "pad": "1",
+            "expect_stdout": "10",
+            "expect_status": 2
         },
         {
             "name": "17 => 11",
             "input": "17",
-            "expect_stdout": "11"
+            "pad": "1",
+            "expect_stdout": "11",
+            "expect_status": 2
         },
         {
             "name": "77 => 4d",
             "input": "77",
-            "expect_stdout": "4d"
+            "pad": "1",
+            "expect_stdout": "4d",
+            "expect_status": 2
         },
         {
             "name": "255 => ff",
             "input": "255",
-            "expect_stdout": "ff"
+            "pad": "1",
+            "expect_stdout": "ff",
+            "expect_status": 2
         },
         {
-            "name": "256 => 00",
-            "input": "256",
-            "expect_stdout": "00"
+            "name": "0 => 0",
+            "input": "0",
+            "pad": "0",
+            "expect_stdout": "0",
+            "expect_status": 1
+        },
+        {
+            "name": "7 => 7",
+            "input": "7",
+            "pad": "0",
+            "expect_stdout": "7",
+            "expect_status": 1
+        },
+        {
+            "name": "10 => a",
+            "input": "10",
+            "pad": "0",
+            "expect_stdout": "a",
+            "expect_status": 1
+        },
+        {
+            "name": "15 => f",
+            "input": "15",
+            "pad": "0",
+            "expect_stdout": "f",
+            "expect_status": 1
+        },
+        {
+            "name": "16 => 10",
+            "input": "16",
+            "pad": "0",
+            "expect_stdout": "10",
+            "expect_status": 2
+        },
+        {
+            "name": "255 => ff",
+            "input": "255",
+            "pad": "0",
+            "expect_stdout": "ff",
+            "expect_status": 2
         }
     ]
 }

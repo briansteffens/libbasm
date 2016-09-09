@@ -1,0 +1,59 @@
+extern hex_to_byte
+
+section .data
+
+    input: dd "{{ input }}"
+
+section .text
+
+global _start
+_start:
+
+    mov rdi, input
+    call hex_to_byte
+    mov rdi, rax
+
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "00 => 0",
+            "input": "00",
+            "expect_status": "0"
+        },
+        {
+            "name": "07 => 7",
+            "input": "07",
+            "expect_status": "7"
+        },
+        {
+            "name": "0a => 10",
+            "input": "0a",
+            "expect_status": "10"
+        },
+        {
+            "name": "10 => 16",
+            "input": "10",
+            "expect_status": "16"
+        },
+        {
+            "name": "11 => 17",
+            "input": "11",
+            "expect_status": "17"
+        },
+        {
+            "name": "4d => 77",
+            "input": "4d",
+            "expect_status": "77"
+        },
+        {
+            "name": "ff => 255",
+            "input": "ff",
+            "expect_status": "255"
+        }
+    ]
+}

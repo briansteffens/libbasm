@@ -5,34 +5,33 @@
 ;     rdi: The string to parse. Must have at least 2 characters.
 ;
 ; Outputs:
-;     rax: 0 on success, -1 on failure
-;     rdx: The parsed value
+;     rax: The parsed value
 
 section .text
 
 global hex_to_byte:function
 hex_to_byte:
 
-    mov byte al, [rdi]
+    mov byte dl, [rdi]
     call convert_digit
-    imul rax, 16
-    mov dl, al
+    imul rdx, 16
+    mov al, dl
 
-    mov byte al, [rdi + 1]
+    mov byte dl, [rdi + 1]
     call convert_digit
-    add dl, al
+    add al, dl
 
     ret
 
 convert_digit:
 
-    cmp al, 'a'
+    cmp dl, 'a'
     jge convert_digit_over_9
 
-        sub al, '0'
+        sub dl, '0'
         ret
 
     convert_digit_over_9:
 
-        sub al, 'a' - 10
+        sub dl, 'a' - 10
         ret

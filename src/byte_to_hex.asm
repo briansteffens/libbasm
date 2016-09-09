@@ -8,8 +8,7 @@
 ;     rdx: Zero-padding: if 1, the output will always be 2 digits (03, 0f, etc)
 ;
 ; Outputs:
-;     rax: 0 on success, -1 on failure
-;     rdx: Number of characters written to rsi (1 or 2)
+;     rax: Number of characters written to rsi (1 or 2)
 
 section .text
 
@@ -44,8 +43,7 @@ second_digit:
     mov byte [rsi + r8], al
     inc r8
 
-    mov rdx, r8
-    xor rax, rax
+    mov rax, r8
     ret
 
 

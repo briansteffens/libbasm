@@ -1,0 +1,79 @@
+extern hex_to_int
+
+section .data
+
+    input: db "{{ input }}"
+    input_len equ $-input
+
+section .text
+
+global _start
+_start:
+
+    mov rdi, input
+    mov rsi, input_len
+    call hex_to_int
+
+; Hack to get around "signed dword immediate exceeds bounds"
+    mov rbx, {{ expected }}
+    test rax, rbx
+    je pass
+
+    mov rdi, 1
+    jmp exit
+
+pass:
+    mov rdi, 0
+
+exit:
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "0 => 0",
+            "input": "0",
+            "expected": "0",
+            "expect_status": "0"
+        },
+        {
+            "name": "f => 15",
+            "input": "f",
+            "expected": "15",
+            "expect_status": "0"
+        },
+        {
+            "name": "10 => 16",
+            "input": "10",
+            "expected": "16",
+            "expect_status": "0"
+        },
+        {
+            "name": "3039 => 12345",
+            "input": "3039",
+            "expected": "12345",
+            "expect_status": "0"
+        },
+        {
+            "name": "4000000000000000 => 4611686018427387904",
+            "input": "4000000000000000",
+            "expected": "4611686018427387904",
+            "expect_status": "0"
+        },
+        {
+            "name": "-1 => -1",
+            "input": "-1",
+            "expected": "-1",
+            "expect_status": "0"
+        },
+        {
+            "name": "-499602d2 => -1234567890",
+            "input": "-499602d2",
+            "expected": "-1234567890",
+            "expect_status": "0"
+        }
+    ]
+}
