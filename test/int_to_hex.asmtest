@@ -1,0 +1,74 @@
+extern int_to_hex
+
+section .bss
+
+    output: resb 16
+
+section .text
+
+global _start
+_start:
+
+    mov rdi, {{ input }}
+    mov rsi, output
+    call int_to_hex
+    mov rbx, rax
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, output
+    mov rdx, rbx
+    syscall
+
+    mov rax, 60
+    mov rdi, rbx
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "0 => 0",
+            "input": "0",
+            "expect_stdout": "0",
+            "expect_status": "1"
+        },
+        {
+            "name": "15 => f",
+            "input": "15",
+            "expect_stdout": "f",
+            "expect_status": "1"
+        },
+        {
+            "name": "16 => 10",
+            "input": "16",
+            "expect_stdout": "10",
+            "expect_status": "2"
+        },
+        {
+            "name": "12345 => 3039",
+            "input": "12345",
+            "expect_stdout": "3039",
+            "expect_status": "4"
+        },
+        {
+            "name": "4611686018427387904 => 4000000000000000",
+            "input": "4611686018427387904",
+            "expect_stdout": "4000000000000000",
+            "expect_status": "16"
+        },
+        {
+            "name": "-1 => -1",
+            "input": "-1",
+            "expect_stdout": "-1",
+            "expect_status": "2"
+        },
+        {
+            "name": "-1234567890 => -499602d2",
+            "input": "-1234567890",
+            "expect_stdout": "-499602d2",
+            "expect_status": "9"
+        }
+    ]
+}

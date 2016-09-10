@@ -1,0 +1,86 @@
+extern int_to_str
+
+section .bss
+
+    buffer resb 16
+
+section .text
+
+global _start
+_start:
+    mov rbp, rsp
+
+; Call the function under test
+    mov rdi, {{ input }}
+    mov rsi, buffer
+    call int_to_str
+
+; Save the number of characters written
+    mov rbx, rax
+
+; Print the output to the console
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, buffer
+    mov rdx, rbx
+    syscall
+
+; Return number of characters written
+    mov rax, 60
+    mov rdi, rbx
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "0",
+            "input": "0",
+            "expect_stdout": "0",
+            "expect_status": "1"
+        },
+        {
+            "name": "1",
+            "input": "1",
+            "expect_stdout": "1",
+            "expect_status": "1"
+        },
+        {
+            "name": "3",
+            "input": "3",
+            "expect_stdout": "3",
+            "expect_status": "1"
+        },
+        {
+            "name": "10",
+            "input": "10",
+            "expect_stdout": "10",
+            "expect_status": "2"
+        },
+        {
+            "name": "12345",
+            "input": "12345",
+            "expect_stdout": "12345",
+            "expect_status": "5"
+        },
+        {
+            "name": "92834427884200",
+            "input": "92834427884200",
+            "expect_stdout": "92834427884200",
+            "expect_status": "14"
+        },
+        {
+            "name": "-1",
+            "input": "-1",
+            "expect_stdout": "-1",
+            "expect_status": "2"
+        },
+        {
+            "name": "-92834427884200",
+            "input": "-92834427884200",
+            "expect_stdout": "-92834427884200",
+            "expect_status": "15"
+        }
+    ]
+}

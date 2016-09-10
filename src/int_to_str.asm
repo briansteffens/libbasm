@@ -1,84 +1,90 @@
-%include "common.asm"
-
-%define PARAM_INPUT 24
-%define PARAM_OUTPUT 16
-%define ASCII_DIGIT_0 48
-
-section .text
-
 ;   Function int_to_str
 ;       Convert an integer to an ASCII string representation.
 ;
-;   Stack arguments:
-;       INPUT     - The integer to convert
-;       OUTPUT    - The output buffer. It should have enough space to
-;                   accommodate the number of digits in INPUT + 1 for the null
-;                   termination character.
+;   Arguments:
+;       rdi - The integer to convert.
+;       rsi - The output buffer. It should have enough space to accommodate the
+;             number of digits in rdi, plus 1 for a dash (if negative).
 ;
 ;   Return values:
-;       rax       - 0 if success, otherwise failure
-;       rbx       - The number of digits written to OUTPUT (not including null)
+;       rax - The number of digits written to rsi.
+
+section .text
 
 global int_to_str:function
 int_to_str:
-    push rbp
-    mov rbp, rsp
 
 ; Load input variable
-    mov rax, [rbp + PARAM_INPUT]
+    mov rax, rdi
 
 ; Load divisor
-    mov rbx, 10
+    mov r8, 10
 
 ; Digit counter
     xor rcx, rcx
 
+; Negative flag
+    xor r9, r9
 
-int_to_str_convert_loop:
+; Check if negative
+    test rax, rax
+    jge not_negative
+
+; Negative input. Prepend dash to output, rax=abs(rax), r9=1
+    mov r9, 1
+    mov byte [rsi], '-'
+    inc rsi
+    imul rax, -1
+
+not_negative:
+
+
+convert_loop:
     xor rdx, rdx
-    div rbx
+    div r8
 
 ; Convert remainder (digit) to ASCII and push onto the stack
-    add rdx, ASCII_DIGIT_0
+    add rdx, '0'
     push rdx
 
 ; Count the new digit
     inc rcx
 
-    cmp rax, 0
-    jg int_to_str_convert_loop
+    test rax, rax
+    jg convert_loop
+
 
 ; Store digit count for return
-    mov rbx, rcx
+    mov rax, rcx
+
+; Add 1 to return if negative to account for the dash
+    test r9, r9
+    je ret_positive
+    inc rax
+ret_positive:
 
 
-; Load buffer output
-    mov rdx, [rbp + PARAM_OUTPUT]
-
-int_to_str_reverse_loop:
+reverse_loop:
+    test rcx, rcx
+    je reverse_loop_done
 
 ; Pop ASCII digits off the stack in reverse order and write to output
-    pop rax
-    mov [rdx], al
+    pop rdx
+    mov [rsi], dl
 
 ; Move output pointer ahead
-    inc rdx
+    inc rsi
 
 ; Decrement counter
     dec rcx
 
-; Loop while counter > 0
-    cmp rcx, 0
-    jge int_to_str_reverse_loop
+    jmp reverse_loop
+
+reverse_loop_done:
 
 
 ; Null-terminate the output
-    mov byte [rdx], 0
+    mov byte [rsi], 0
 
 
-; Successful return code
-    xor rax, rax
-
-    mov rsp, rbp
-    pop rbp
     ret
