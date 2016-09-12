@@ -35,7 +35,8 @@
     },
     {
       "name": "str_cpy",
-      "functions": ["str_cpy"]
+      "functions": ["str_cpy"],
+      "dependencies": ["str_len"]
     },
     {
       "name": "str_debug",
@@ -45,6 +46,10 @@
     {
       "name": "str_len",
       "functions": ["str_len"]
+    },
+    {
+      "name": "str_n_len",
+      "functions": ["str_n_len"]
     },
     {
       "name": "str_rev",

@@ -1,0 +1,42 @@
+extern str_n_len
+
+section .data
+
+    input db "{{ input }}", 0
+
+section .text
+
+global _start
+_start:
+    mov rdi, input
+    mov rsi, {{ limit }}
+    call str_n_len
+    mov rdi, rax
+
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "'Greetings!' limit 255 => 10",
+            "input": "Greetings!",
+            "limit": "255",
+            "expect_status": 10
+        },
+        {
+            "name": "'Greetings!' limit 5 => 5",
+            "input": "Greetings!",
+            "limit": "5",
+            "expect_status": 5
+        },
+        {
+            "name": "(empty string) limit 255 => 0",
+            "input": "",
+            "limit": "255",
+            "expect_status": 0
+        }
+    ]
+}

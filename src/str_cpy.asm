@@ -1,38 +1,36 @@
-%include "common.asm"
+; Function str_cpy
+;     Copy data from one string to another.
+;
+; Inputs:
+;     rdi: input string
+;     rsi: output string
+;
+; Outputs:
+;     rax: number of bytes written to output
+
+extern str_len
 
 section .text
 
 global str_cpy:function
 str_cpy:
-    push rbp
-    mov rbp, rsp
 
-; Set char index
-    mov rcx, 0
+; Get input length
+    call str_len
 
-; Put the input buffer in ebx
-    mov rbx, [rbp + 24]
-
-; Put the output buffer in edx
-    mov rdx, [rbp + 16]
-
-str_cpy_loop_start:
-; Load the next byte from source into al
-    mov al, [rbx + rcx]
-
-; Save the byte into the target
-    mov [rdx + rcx], al
-
-; Increment character index
+; Char index counter. Start one higher to include null-termination character.
+    mov rcx, rax
     inc rcx
 
-; Check for null char and end copy if so
-    cmp al, 0
-    jne str_cpy_loop_start
+loop_start:
+    test rcx, rcx
+    jl loop_end
 
-; Copy bytes written to eax for return value
-    mov rax, rcx
+    mov dl, [rdi + rcx]
+    mov [rsi + rcx], dl
 
-    mov rsp, rbp
-    pop rbp
+    dec rcx
+    jmp loop_start
+
+loop_end:
     ret

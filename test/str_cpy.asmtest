@@ -1,0 +1,45 @@
+extern str_cpy
+
+section .bss
+
+    target: resb 255
+
+section .data
+
+    source db "{{ input }}", 0
+
+section .text
+
+global _start
+_start:
+    mov rdi, source
+    mov rsi, target
+    call str_cpy
+    mov rbx, rax
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, target
+    mov rdx, rbx
+    syscall
+
+    mov rax, 60
+    mov rdi, rbx
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "Greetings!",
+            "input": "Greetings!",
+            "expect_stdout": "Greetings!"
+        },
+        {
+            "name": "(empty string)",
+            "input": "",
+            "expect_stdout": ""
+        }
+    ]
+}

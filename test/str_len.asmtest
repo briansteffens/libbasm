@@ -1,0 +1,33 @@
+extern str_len
+
+section .data
+
+    input db "{{ input }}", 0
+
+section .text
+
+global _start
+_start:
+    mov rdi, input
+    call str_len
+    mov rdi, rax
+
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "Greetings! => 10",
+            "input": "Greetings!",
+            "expect_status": 10
+        },
+        {
+            "name": "(empty string) => 0",
+            "input": "",
+            "expect_status": 0
+        }
+    ]
+}

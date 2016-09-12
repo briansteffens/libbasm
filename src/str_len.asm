@@ -3,7 +3,6 @@
 ;
 ; Inputs:
 ;     rdi: string to count
-;     rsi: max characters to check
 ;
 ; Outputs:
 ;     rax: length of string
@@ -12,17 +11,15 @@ section .text
 
 global str_len:function
 str_len:
-    mov rax, 0
 
-    strlen_loop:
-        cmp byte [rdi + rax], 0
-        je strlen_end
+    xor rax, rax
 
-        cmp rax, rsi
-        jge strlen_end
+loop_start:
+    cmp byte [rdi + rax], 0
+    je loop_end
 
-        inc rax
-    jmp strlen_loop
+    inc rax
+    jmp loop_start
 
-    strlen_end:
-        ret
+loop_end:
+    ret
