@@ -33,8 +33,6 @@ tests: build
 		obj/int_to_str.o
 	nasm -f elf64 -isrc/ tests/test_str_rev.asm -o obj/test_str_rev.o
 	ld -o bin/test_str_rev obj/test_str_rev.o obj/str_rev.o
-	nasm -f elf64 -isrc/ tests/test_str_str.asm -o obj/test_str_str.o
-	ld -o bin/test_str_str obj/test_str_str.o obj/str_str.o
 	nasm -f elf64 -isrc/ tests/test_str_to_int.asm -o obj/test_str_to_int.o
 	ld -o bin/test_str_to_int obj/test_str_to_int.o obj/str_to_int.o
 

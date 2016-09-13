@@ -1,0 +1,82 @@
+extern str_str
+
+section .data
+
+    haystack db "{{ haystack }}", 0
+    needle db "{{ needle }}", 0
+
+section .text
+
+global _start
+_start:
+    mov rdi, haystack
+    mov rsi, needle
+    call str_str
+
+    xor rdi, rdi
+    cmp rax, {{ result }}
+    jne fail
+    jmp return
+
+fail:
+    mov rdi, 1
+
+return:
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "'ee' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "ee",
+            "result": "2",
+            "expect_status": "0"
+        },
+        {
+            "name": "'Gree' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "Gree",
+            "result": "0",
+            "expect_status": "0"
+        },
+        {
+            "name": "'G' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "G",
+            "result": "0",
+            "expect_status": "0"
+        },
+        {
+            "name": "'ings!' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "ings!",
+            "result": "5",
+            "expect_status": "0"
+        },
+        {
+            "name": "'!' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "!",
+            "result": "9",
+            "expect_status": "0"
+        },
+        {
+            "name": "'notfound' in 'Greetings!'",
+            "haystack": "Greetings!",
+            "needle": "notfound",
+            "result": "-1",
+            "expect_status": "0"
+        },
+        {
+            "name": "'notfound' in ''",
+            "haystack": "",
+            "needle": "notfound",
+            "result": "-1",
+            "expect_status": "0"
+        }
+    ]
+}
