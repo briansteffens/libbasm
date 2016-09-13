@@ -1,42 +1,40 @@
-%include "common.asm"
+; Function str_rev
+;     Reverse string in-place in memory.
+;
+; Inputs:
+;     rdi: The string to reverse.
+;     rsi: The number of characters to include in the reversal.
 
 section .text
 
 global str_rev
 str_rev:
-    push rbp
-    mov rbp, rsp
 
-    sub rsp, 8                      ; Reserve 8 bytes for max bytesr
+; Get the mid-point in the string
+    mov rax, rsi
+    xor rdx, rdx
+    mov rcx, 2
+    idiv rcx
 
-    mov rax, [rbp + 16]             ; Total count -> rax
-    mov rbx, 2                      ; Dividing by 2 -> rbx
-    idiv rbx                        ; Total count / 2 -> rax
+; Start the end pointer
+    add rsi, rdi
+    dec rsi
+
+loop_start:
+    test rax, rax
+    je loop_end
+
+; Swap a character
+    mov dl, [rsi]
+    mov cl, [rdi]
+    mov [rdi], dl
+    mov [rsi], cl
+
+; Next
     dec rax
-    mov [rbp - 8], rax              ; Store max swaps to perform (-1)
+    inc rdi
+    dec rsi
+    jmp loop_start
 
-    mov rcx, 0                      ; Start/left counter
-    mov rdx, [rbp + 16]             ; End/right counter (len - 1)
-    dec rdx
-
-    mov rbx, [rbp + 24]             ; Buffer -> ebx
-
-str_rev_loop_start:
-    mov al, [rbx + rcx]             ; Grab char from left
-    mov ah, [rbx + rdx]             ; Grab char from right
-
-    mov [rbx + rcx], ah             ; Swap right -> left
-    mov [rbx + rdx], al             ; Swap left -> right
-
-    cmp [rbp - 8], rcx              ; Compare left counter to max swaps
-    je str_rev_loop_end
-
-    inc rcx                         ; Increment left counter
-    dec rdx                         ; Decrement right counter
-
-    jmp str_rev_loop_start
-
-str_rev_loop_end:
-    mov rsp, rbp
-    pop rbp
+loop_end:
     ret

@@ -1,0 +1,40 @@
+extern str_rev
+
+section .data
+
+    string db "{{ input }}"
+    string_len equ $-string
+
+section .text
+
+global _start
+_start:
+    mov rdi, string
+    mov rsi, string_len
+    call str_rev
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, string
+    mov rdx, string_len
+    syscall
+
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "Even-numbered string 'Greetings!'",
+            "input": "Greetings!",
+            "expect_stdout": "!sgniteerG"
+        },
+        {
+            "name": "Odd-numbered string 'Farewell!'",
+            "input": "Farewell!",
+            "expect_stdout": "!lleweraF"
+        }
+    ]
+}
