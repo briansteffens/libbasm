@@ -26,10 +26,6 @@
       "functions": ["allocate", "reallocate", "deallocate"]
     },
     {
-      "name": "prompt",
-      "functions": ["prompt"]
-    },
-    {
       "name": "str_cmp",
       "functions": ["str_cmp"]
     },
