@@ -8,7 +8,6 @@ build:
 	nasm -f elf64 -isrc/ src/int_to_str.asm -o obj/int_to_str.o
 	nasm -f elf64 -isrc/ src/int_to_hex.asm -o obj/int_to_hex.o
 	nasm -f elf64 -isrc/ src/mem.asm -o obj/mem.o
-	nasm -f elf64 -isrc/ src/str_cat.asm -o obj/str_cat.o
 	nasm -f elf64 -isrc/ src/str_cmp.asm -o obj/str_cmp.o
 	nasm -f elf64 -isrc/ src/str_cpy.asm -o obj/str_cpy.o
 	nasm -f elf64 -isrc/ src/str_len.asm -o obj/str_len.o
@@ -22,8 +21,6 @@ build:
 tests: build
 	nasm -f elf64 -isrc/ tests/test_mem.asm -o obj/test_mem.o
 	ld -o bin/test_mem obj/test_mem.o obj/mem.o
-	nasm -f elf64 -isrc/ tests/test_str_cat.asm -o obj/test_str_cat.o
-	ld -o bin/test_str_cat obj/test_str_cat.o obj/str_cat.o
 	nasm -f elf64 -isrc/ tests/test_str_rev.asm -o obj/test_str_rev.o
 	ld -o bin/test_str_rev obj/test_str_rev.o obj/str_rev.o
 	nasm -f elf64 -isrc/ tests/test_str_to_int.asm -o obj/test_str_to_int.o
