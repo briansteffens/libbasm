@@ -35,11 +35,6 @@
       "dependencies": ["str_len"]
     },
     {
-      "name": "str_debug",
-      "functions": ["str_debug"],
-      "dependencies": ["int_to_str"]
-    },
-    {
       "name": "str_len",
       "functions": ["str_len"]
     },
