@@ -1,0 +1,60 @@
+extern str_to_int
+
+section .data
+
+    input: db "{{ input }}"
+    input_len: equ $-input
+
+section .text
+
+global _start
+_start:
+    mov rdi, input
+    mov rsi, input_len
+    call str_to_int
+
+    xor rdi, rdi
+    cmp rax, {{ output }}
+    je return
+    mov rdi, 1
+
+return:
+    mov rax, 60
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "0",
+            "input": "0",
+            "output": "0",
+            "expect_status": "0"
+        },
+        {
+            "name": "1",
+            "input": "1",
+            "output": "1",
+            "expect_status": "0"
+        },
+        {
+            "name": "-1",
+            "input": "-1",
+            "output": "-1",
+            "expect_status": "0"
+        },
+        {
+            "name": "1234567890",
+            "input": "1234567890",
+            "output": "1234567890",
+            "expect_status": "0"
+        },
+        {
+            "name": "-1234567890",
+            "input": "-1234567890",
+            "output": "-1234567890",
+            "expect_status": "0"
+        }
+    ]
+}
