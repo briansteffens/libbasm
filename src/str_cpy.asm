@@ -9,6 +9,7 @@
 ;     rax: number of bytes written to output
 
 extern str_len
+extern str_n_cpy
 
 section .text
 
@@ -17,20 +18,15 @@ str_cpy:
 
 ; Get input length
     call str_len
+    mov rcx, rax
 
 ; Char index counter. Start one higher to include null-termination character.
-    mov rcx, rax
-    inc rcx
+    mov rdx, rcx
+    inc rdx
 
-loop_start:
-    test rcx, rcx
-    jl loop_end
+; Call copy function
+    call str_n_cpy
 
-    mov dl, [rdi + rcx]
-    mov [rsi + rcx], dl
+    mov rax, rcx
 
-    dec rcx
-    jmp loop_start
-
-loop_end:
     ret

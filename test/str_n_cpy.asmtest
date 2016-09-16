@@ -1,0 +1,48 @@
+extern str_n_cpy
+
+section .bss
+
+    target: resb 255
+
+section .data
+
+    source db "{{ input }}", 0
+
+section .text
+
+global _start
+_start:
+    mov rdi, source
+    mov rsi, target
+    mov rdx, {{ count }}
+    call str_n_cpy
+    mov rbx, rax
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, target
+    mov rdx, {{ count }}
+    syscall
+
+    mov rax, 60
+    mov rdi, rbx
+    syscall
+
+-----
+
+{
+    "cases": [
+        {
+            "name": "[Greetings!]",
+            "input": "Greetings!",
+            "count": "10",
+            "expect_stdout": "Greetings!"
+        },
+        {
+            "name": "[Greet]ings!",
+            "input": "Greetings!",
+            "count": "5",
+            "expect_stdout": "Greet"
+        }
+    ]
+}

@@ -32,7 +32,11 @@
     {
       "name": "str_cpy",
       "functions": ["str_cpy"],
-      "dependencies": ["str_len"]
+      "dependencies": ["str_len", "str_n_cpy"]
+    },
+    {
+      "name": "str_n_cpy",
+      "functions": ["str_n_cpy"]
     },
     {
       "name": "str_len",
