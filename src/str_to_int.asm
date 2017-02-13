@@ -6,7 +6,8 @@
 ;     rsi: The number of characters to consider part of the string
 ;
 ; Outputs:
-;     rax: The parsed integer
+;     rax: 0 on success, otherwise failure
+;     rdx: The parsed integer
 
 section .text
 
@@ -66,4 +67,7 @@ str_to_int:
         imul rax, -1
 
     return:
+        mov rdx, rax
+        mov rax, 0
+
         ret
